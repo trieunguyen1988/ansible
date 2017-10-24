@@ -1,0 +1,34 @@
+---
+# - name: Include variables
+#   include_vars: all.yml
+
+- name: Mysql - Install Mysql package  
+  apt:
+    name: "{{item}}"
+    state: installed
+    update_cache: true
+  with_items:
+    # - mysql5.7
+    - mysql-common
+    - mysql-server
+    - mysql-client
+    - python-mysqldb
+
+- name: Mysql - Set root password
+  mysql_user:
+    host: localhost
+    name: '{{ mysql_root_user }}'
+    password: '{{ mysql_root_password }}'
+    login_user: '{{ mysql_root_user }}'
+    login_password: '{{ mysql_root_password }}'
+    check_implicit_admin: yes
+    state: present
+  when: mysql_root_password is defined
+
+- name: Create .my.cnf
+  template:
+    src: "client.my.cnf.j2"
+    dest: "/root/.my.cnf"
+    owner: root
+    group: root
+    mode: 0600

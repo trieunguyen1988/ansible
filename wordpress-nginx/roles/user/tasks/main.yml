@@ -1,0 +1,23 @@
+---
+- name: Create group
+  group:
+    name: "{{item.username}}"
+  with_items: "{{users}}"
+
+- name: "Create user"
+  user:
+    name: "{{item.username}}"
+    createhome: "{{item.users_create_homedirs}}"
+    group: "{{item.group}}"
+    shell: "{{item.shell}}"
+    home: "{{ item.home | default('/home/' + item.username) }}"
+    append: yes
+  with_items: "{{users}}"
+
+- name: Set authorized key
+  authorized_key:
+    user: "{{item.username}}"
+    state: present
+    key: "{{lookup('file', item.ssh_key_pub_file)}}"
+    path: "/home/{{item.username}}/.ssh/authorized_keys"
+  with_items: "{{users}}"

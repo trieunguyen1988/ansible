@@ -1,0 +1,8 @@
+---
+users:
+  - name: Create user nguyen
+    username: nguyen
+    group: nguyen
+    users_create_homedirs: yes
+    shell: /bin/bash
+    ssh_key_pub_file: id_rsa_nguyen.pub
