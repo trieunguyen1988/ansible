@@ -7,6 +7,10 @@
 
 - name: Extract archive
   command: chdir=/usr/share/nginx/html/ /bin/tar xvf wp-latest.tar.gz creates={{ doc_root }}
+  # unarchive:
+  #   src: /usr/share/nginx/html/wp-latest.tar.gz
+  #   dest: /usr/share/nginx/html/
+  #   remote_src: yes
 
 - name: Add group "wordpress"
   group: name=wordpress

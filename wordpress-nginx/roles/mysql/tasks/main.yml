@@ -14,21 +14,23 @@
     - mysql-client
     - python-mysqldb
 
-- name: Mysql - Set root password
-  mysql_user:
-    host: localhost
-    name: '{{ mysql_root_user }}'
-    password: '{{ mysql_root_password }}'
-    login_user: '{{ mysql_root_user }}'
-    login_password: '{{ mysql_root_password }}'
-    check_implicit_admin: yes
-    state: present
-  when: mysql_root_password is defined
+# - name: Create .my.cnf
+#   template:
+#     src: "client.my.cnf.j2"
+#     dest: "/root/.my.cnf"
+#     owner: root
+#     group: root
+#     mode: 0600
 
-- name: Create .my.cnf
-  template:
-    src: "client.my.cnf.j2"
-    dest: "/root/.my.cnf"
-    owner: root
-    group: root
-    mode: 0600
+# - name: Mysql - Set root password
+#   mysql_user:
+#     host: localhost
+#     name: '{{ mysql_root_user }}'
+#     password: '{{ mysql_root_password }}' 
+#     login_user: '{{ mysql_root_user }}'
+#     login_password: '{{ mysql_root_password }}'
+#     check_implicit_admin: yes
+#     priv: '*.*:ALL'
+#     login_unix_socket: /var/run/mysqld/mysqld.sock
+#     state: present
+#   when: mysql_root_password is defined
